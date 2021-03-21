@@ -1,0 +1,17 @@
+# strip and re-add tools/bin
+PATH="$(echo "${PATH}" | sed -e 's|:[^:]*/ftb-env-tools/bin||g'):${FTB_PROJECTS}/tools/bin"
+
+# --------------------------------------------------
+# other helpers
+
+for rc in ${FTB_PROJECTS}/tools/ftbrc-*; do
+  source ${rc}
+done
+
+# --------------------------------------------------
+# # local customization
+
+ if [[ -e ${FTB_PROJECTS}/.ftbrc ]]; then
+   source ${FTB_PROJECTS}/.ftbrc
+   fi
+
