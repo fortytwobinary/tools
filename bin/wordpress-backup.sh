@@ -2,8 +2,6 @@
 
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 POD=$(kubectl get pod -n wordpress | grep wordpress-mysql | awk '{print $1}')
-echo $POD
-echo $TIMESTAMP
 
 kubectl cp .my.cnf -n wordpress $POD:root/.my.cnf
 kubectl cp wp-pod-dump.sql -n wordpress $POD:tmp/wp-pod-dump.sql
