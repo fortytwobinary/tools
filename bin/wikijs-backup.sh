@@ -3,10 +3,13 @@
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 POD=$(kubectl get pod -n wikijs | grep wikijs-mariadb | awk '{print $1}')
 
-kubectl cp .my.cnf -n wikijs $POD:root/.my.cnf
-kubectl cp pod-dump.sql -n wikijs $POD:tmp/pod-dump.sql
+echo $TIMESTAMP
+echo $POD
 
-kubectl exec -it $POD -n wikijs -- bash -c ./tmp/pod-dump.sql
+kubectl cp /home/ubuntu/tools/bin/.my.cnf -n wikijs $POD:root/.my.cnf
+kubectl cp /home/ubuntu/tools/bin/pod-dump.sql -n wikijs $POD:tmp/pod-dump.sql
+
+kubectl exec -i $POD -n wikijs -- bash -c 'tmp/pod-dump.sql'
 kubectl cp -n wikijs $POD:tmp/wikijs.sql /mnt/ext/backups/wikijs-$TIMESTAMP.sql
-kubectl exec -it $POD -n wikijs -- bash -c 'rm -f tmp/wikijs*' 
+kubectl exec -i $POD -n wikijs -- bash -c 'rm -f tmp/wikijs*' 
 
