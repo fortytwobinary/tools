@@ -169,6 +169,7 @@ fi
 if [[ ${cloneDevops} == true ]]; then
     ( set -ex
       git clone -b main   git@github.com:fortytwobinary/k8s-configs.git 
+      git clone -b main   git@github.com:fortytwobinary/configs.git 
     )
 fi
 if [[ ${cloneCommon} == true ]]; then

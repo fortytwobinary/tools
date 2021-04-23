@@ -1,21 +1,9 @@
-# add projects dir
+# the directory path where this file is being source'd (per BASH_SOURCE, else zsh %x)
+tools="$( cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%x}}" )" && pwd )"
 
-export FTB_PROJECTS=~/ftb
+export FTB_PROJECTS="$( cd "${tools}/.." && pwd )"
+unset tools
 
-# strip and re-add tools/bin
-PATH="$(echo "${PATH}" | sed -e 's|:[^:]*/tools/bin||g'):${FTB_PROJECTS}/tools/bin"
+export FTB_K8S_CONFIGS=${FTB_PROJECTS}/k8s-configs
 
-# --------------------------------------------------
-# other helpers
-
-for rc in ${FTB_PROJECTS}/tools/ftbrc-*; do
-  source ${rc}
-done
-
-# --------------------------------------------------
-# # local customization
-
- if [[ -e ${FTB_PROJECTS}/.ftbrc ]]; then
-   source ${FTB_PROJECTS}/.ftbrc
-   fi
 
