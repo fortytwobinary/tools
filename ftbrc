@@ -1,5 +1,9 @@
+# add projects dir
+
+export FTB_PROJECTS=~/ftb
+
 # strip and re-add tools/bin
-PATH="$(echo "${PATH}" | sed -e 's|:[^:]*/ftb-env-tools/bin||g'):${FTB_PROJECTS}/tools/bin"
+PATH="$(echo "${PATH}" | sed -e 's|:[^:]*/tools/bin||g'):${FTB_PROJECTS}/tools/bin"
 
 # --------------------------------------------------
 # other helpers
