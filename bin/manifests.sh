@@ -1,5 +1,5 @@
 #!/bin/bash
-# Setup a FTB dev environment
+# create k8s object manifests from system using kubectl
 
 ################################################################################
 if [[ "$1" == "--help" ]]; then
@@ -28,6 +28,9 @@ Options:
   --sabrsgl  Clone & build the SABRS GL source repos
    --smarts  Clone & build the CFMS SMARTS source repos
  --smartslh  Clone & build the CFMS SMARTS Labor History source repos
+ --deploy    Dump YAML deployment manifest 
+ --service   Dump YAML service manifest 
+ --ingress   Dump YAML ingress manifest 
      --ginv  Clone & build the G-Invoicing source repo
 ENDHELP
     exit
@@ -35,8 +38,10 @@ fi
 ################################################################################
 
 BASH_DIR="$( cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo $BASH_DIR
 
 PROJECTS=$( cd ${BASH_DIR}/../.. && pwd )
+echo $PROJECTS
 
 # ignore any command customizations
 unalias cat  2> /dev/null
@@ -66,6 +71,9 @@ while [[ $# > 0 && "${1}" =~ ^-- ]]; do
       --sabrsgl) cloneSabrsGl=true;  noAction=false; shift 1 ;;
        --smarts) cloneSmarts=true;   noAction=false; shift 1 ;;
      --smartslh) cloneSmartsLh=true; noAction=false; shift 1 ;;
+      --deploy)  yamlDeploy=true;    noAction=false; shift 1 ;;
+      --service) yamlService=true;   noAction=false; shift 1 ;;
+      --ingress) yamlIngress=true;   noAction=false; shift 1 ;;
               *) echo "Unrecognized option: ${1}" >&2; exit 1 ;;
     esac
 done
@@ -277,3 +285,20 @@ if [[ ${cloneSmartsLh} == true ]]; then
     )
 fi
 
+if [[ ${yamlDeploy} == true ]]; then
+    ( set -ex
+      kubectl get deploy -n $1 -o yaml > dump-deploy.yaml
+    )
+fi
+
+if [[ ${yamlService} == true ]]; then
+    ( set -ex
+      kubectl get svc -n $1 -o yaml > dump-service.yaml
+    )
+fi
+
+if [[ ${yamlIngress} == true ]]; then
+    ( set -ex
+      kubectl get ingress -n $1 -o yaml > dump-ingress.yaml
+    )
+fi
