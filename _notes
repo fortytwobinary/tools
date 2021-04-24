@@ -1,0 +1,5 @@
+# Notes
+
+- need to cleanup and refactor foreach.sh and repeat.sh
+- need to comment the shell scripts that are run on other machines under /tools/bin
+- outline a README.md

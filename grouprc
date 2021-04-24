@@ -1,9 +1,10 @@
 # the directory path where this file is being source'd (per BASH_SOURCE, else zsh %x)
 tools="$( cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%x}}" )" && pwd )"
 
-export FTB_PROJECTS="$( cd "${tools}/.." && pwd )"
+export PROJECTS="$( cd "${tools}/.." && pwd )"
 unset tools
 
-export FTB_K8S_CONFIGS=${FTB_PROJECTS}/k8s-configs
-
+export K8S_CONFIGS=${PROJECTS}/k8s-configs
+export CONFIGS=${PROJECTS}/configs
+export TOOLS=${PROJECTS}/tools
 
